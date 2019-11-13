@@ -1,6 +1,6 @@
 %计算接收到的符号对应于各个标准符号的相对概率
 %参数channelres接收到的符号，bitmode比特/符号数，theta
-function probability=calculateProbability(channelres, bitmode,theta,knownphi)
+function probability=calculateProbability(channelres, bitmode)
     switch bitmode
             case 1
                 x=[1,-1];

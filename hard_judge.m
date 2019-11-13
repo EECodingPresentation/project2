@@ -3,12 +3,7 @@ function bitcode = hard_judge(channelres, bitmode, eff)
     G2 = [0, 0, 1, 1; 0, 1, 1, 0];%1/2效率
     G3 = [0, 0, 0, 0, 1, 1, 1, 1; 0, 0, 1, 1, 1, 1, 0, 0; ...
         0, 1, 1, 0, 0, 1, 1, 0];%1/3效率
-%     %% 分情况，是否已知Phi角
-%     if knownPhi
-%         channelres = channelres .* exp(-1j*phi);
-%     else
-%         channelres = channelres .* exp(-1j*theta/2);
-%     end
+
     %% 硬判决划分为bit
     switch bitmode
         case 1
