@@ -280,8 +280,6 @@ struct bign
 //		ans.zero();
 //		return ans;
 //	}
-	bign operator /(const bign &bb)
-	{
 //		bign a,b;
 //		a=*this;//会变的被减数 
 //		b=bb;
@@ -305,6 +303,9 @@ struct bign
 //		ans.len=len;
 //		ans.zero();
 //		return ans;
+	bign operator /(const bign &bb)
+	{
+
 		bign l,r=*this,tmp_one,b=bb;tmp_one=1;
         l.c[0]=1;
         while(l<r)
@@ -401,27 +402,12 @@ bign quickpower(bign a,bign b,bign m) // x^y mod m
 	{
 		if(b.c[1]&1)
 		{
-//			st=clock();
 			ans=ans*a;
-//			ft=clock();
-//			printf("if(0.5)%f\n",ft-st);
-//			st=clock();
 			ans=ans%m;
-//			ft=clock();
-//			printf("if(1)%f\n",ft-st);
 		}
-//		st=clock();
 		a=a*a;
-//		ft=clock();
-//		printf("if(1.5)%f\n",ft-st);
-//		st=clock();
 		a=a%m;	
-//		ft=clock();
-//		printf("if(2)%f\n",ft-st);
-//		st=clock();
 		b=b.quickchu2();
-//		ft=clock();
-//		printf("if(3)%f\n\n",ft-st);
 	} 
 	return ans;
 }
