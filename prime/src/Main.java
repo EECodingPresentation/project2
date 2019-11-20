@@ -10,7 +10,7 @@ public class Main {
         for(int i=0;i<100;i++)
         {
             BigInteger bi;
-            int bitLength = 50;//1024;
+            int bitLength = 128;//1024;
             Random rnd = new Random();
             bi = BigInteger.probablePrime(bitLength, rnd);
             System.out.println(bi.toString());

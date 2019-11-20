@@ -1,15 +1,15 @@
 /*
 8192bit,每3bit聚成一个2731位8进制数。
 看成10进制数。
-秘钥长度大概10位(2^32,2^32,2^64)
+秘钥长度大概40位 
 压4位处理后
 length:
 data: 683
-publick_key:3
+publick_key:10
 */
 #include "bign.h"
 #include<ctime>
-const int M=4;//分组加密长度 
+const int M=10;//分组加密长度 
 
 bign bitToOct(char *databit,int len)//每3bit合一下 
 {

@@ -1,6 +1,6 @@
 #include "bign.h"
 #include<ctime>
-const int M=4;
+const int M=10;
 
 bign bitToHex(char *databit,int len)//每4bit合一下 
 {
@@ -58,24 +58,13 @@ void RSA_decode(bign data,bign private_key,bign key)
 			r.c[j]=data.c[i+j-1];
 		}
 		r.len=j-1;
-//		printf("%d ",i);
-//		r.Print();
-//		printf("%d ",r.len);
 		bign plaintext=quickpower(r,private_key,key);//解密之后的文段
-//		plaintext.Print();
-//		printf("%d ",plaintext.len);
-		char *s=OctTobit(plaintext);  
-//		printf("%s %d ",s,strlen(s));
+		char *s=OctTobit(plaintext); 
 		for(int i=0;i<strlen(s);i++)
 		{
 			ss[cnt++]=s[i];
 		}
 		delete []s;
-//		printf("%d\n\n",cnt);
-//		if(cnt>7000)
-//		{
-//			continue;
-//		}
 	}
 	//剔除高阶零项
 

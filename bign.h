@@ -257,55 +257,121 @@ struct bign
 		b=a;
 		return *this*b;
 	} 
+//	bign operator /(const bign &bb)
+//	{
+//		bign ans,rest;
+//		bign a,b;
+//		a=*this;
+//		b=bb;
+//		ans.len=a.len;
+//		ans.sign=a.sign^b.sign;
+//		b.sign=0;
+//		a.sign=0;
+//		for(int i=a.len;i>=1;i--)
+//		{
+//			rest=rest*base;
+//			rest.c[1]=a.c[i];
+//			while(rest>=b)
+//			{
+//				rest=rest-b;
+//				++ans.c[i];
+//			}
+//		}
+//		ans.zero();
+//		return ans;
+//	}
 	bign operator /(const bign &bb)
 	{
-		bign ans,rest;
-		bign a,b;
-		a=*this;
-		b=bb;
-		ans.len=a.len;
-		ans.sign=a.sign^b.sign;
-		b.sign=0;
-		a.sign=0;
-		for(int i=a.len;i>=1;i--)
-		{
-			rest=rest*base;
-			rest.c[1]=a.c[i];
-			while(rest>=b)
-			{
-				rest=rest-b;
-				++ans.c[i];
-			}
-		}
-		ans.zero();
-		return ans;
+//		bign a,b;
+//		a=*this;//会变的被减数 
+//		b=bb;
+//		bign ans;//ans除数，r扩张后的被减数 
+//		for(int i=len-b.len;i>=0;i--)
+//		{
+//			bign r;
+//			for(int j=b.len;j>=1;j--)
+//			{
+//				r.c[j+i]=b.c[j];
+//			}
+//			r.len=b.len+i;
+//			r.zero();
+//			//生成当前阶数的减数 
+//			while(a>=r)
+//			{
+//				a=a-r;
+//				ans.c[1+i]++;
+//			}
+//		}
+//		ans.len=len;
+//		ans.zero();
+//		return ans;
+		bign l,r=*this,tmp_one,b=bb;tmp_one=1;
+        l.c[0]=1;
+        while(l<r)
+        {
+            bign mid=l+r+tmp_one;
+			mid=mid.quickchu2();
+            if(*this<(b*mid))
+                r=mid-tmp_one;
+            else
+                l=mid;
+        }
+        return l;
 	}
 	bign operator /(const int &a)
 	{
 		bign b;b=a;
 		return *this/b;
 	}
+//	bign operator %(const bign &bb)
+//	{
+//		bign rest;
+//		bign a,b;
+//		a=*this;
+//		b=bb;
+//		
+//		b.sign=0;
+//		a.sign=0;
+//		for(int i=a.len;i>=1;i--)
+//		{
+//			rest=rest*base;
+//			rest.c[1]=a.c[i];
+//			while(rest>=b)
+//			{
+//				rest=rest-b;
+//			}
+//		}
+//		rest.sign=a.sign^b.sign;
+//		rest.zero();
+//		return rest;
+//	}
 	bign operator %(const bign &bb)
 	{
-		bign rest;
-		bign a,b;
-		a=*this;
-		b=bb;
-		
-		b.sign=0;
-		a.sign=0;
-		for(int i=a.len;i>=1;i--)
-		{
-			rest=rest*base;
-			rest.c[1]=a.c[i];
-			while(rest>=b)
-			{
-				rest=rest-b;
-			}
-		}
-		rest.sign=a.sign^b.sign;
-		rest.zero();
-		return rest;
+//		bign a,b;
+//		a=*this;//会变的被减数 
+//		b=bb;
+//		bign ans;//ans除数，r扩张后的被减数 
+//		for(int i=len-b.len;i>=0;i--)
+//		{
+//			bign r;
+//			for(int j=b.len;j>=1;j--)
+//			{
+//				r.c[j+i]=b.c[j];
+//			}
+//			r.len=b.len+i;
+//			r.zero();
+//			//生成当前阶数的减数 
+//			while(a>=r)
+//			{
+//				a=a-r;
+//				ans.c[1+i]++;
+//			}
+//		}
+//		a.zero();
+//		return a;
+		bign res=*this;
+        res=res-res/bb*bb;
+        return res;
 	}
 	bign operator %(const int &a)
 	{
@@ -330,14 +396,32 @@ bign quickpower(bign a,bign b,bign m) // x^y mod m
 	bign ans,d;
 	ans=1;
 	d=2;
+	double st,ft;
 	while(b.len>1||b.c[1]>0)
 	{
 		if(b.c[1]&1)
 		{
-			ans=ans*a%m;
+//			st=clock();
+			ans=ans*a;
+//			ft=clock();
+//			printf("if(0.5)%f\n",ft-st);
+//			st=clock();
+			ans=ans%m;
+//			ft=clock();
+//			printf("if(1)%f\n",ft-st);
 		}
-		a=a*a%m;	
+//		st=clock();
+		a=a*a;
+//		ft=clock();
+//		printf("if(1.5)%f\n",ft-st);
+//		st=clock();
+		a=a%m;	
+//		ft=clock();
+//		printf("if(2)%f\n",ft-st);
+//		st=clock();
 		b=b.quickchu2();
+//		ft=clock();
+//		printf("if(3)%f\n\n",ft-st);
 	} 
 	return ans;
 }
