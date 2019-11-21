@@ -15,6 +15,7 @@ function probability=calculateProbability(channelres, bitmode)
     probability=zeros(length(channelres),length(x));
     for i = 1: length(channelres)
         for k=1:length(x)
+            %probability(i, k) = exp(-abs(x(k)-channelres(1, i)).^2); 
             probability(i, k) = exp(-abs(x(k)-channelres(1, i)).^2); 
        end
     end
