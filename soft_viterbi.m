@@ -1,22 +1,22 @@
 function decode_bit = soft_viterbi(bitProb, eff, tail, holegap)
-    %% ³õÊ¼»¯
+    %% åˆå§‹åŒ–
     len=size(bitProb, 2);
     decode_bit = zeros(1, len);
     num = 8;
     if eff==2
-        G=[1,1,0,1;1,1,1,1;];%1/2Ð§ÂÊ
+        G=[1,1,0,1;1,1,1,1;];%1/2æ•ˆçŽ‡
     elseif eff==3
-        G=[1,0,1,1;1,1,0,1;1,1,1,1;];%1/3Ð§ÂÊ
+        G=[1,0,1,1;1,1,0,1;1,1,1,1;];%1/3æ•ˆçŽ‡
     end
     G = fliplr(G);
     P = [4; 2; 1];
     if holegap > 2
         holes = ceil((len-1)/(holegap-1));
-        dis = zeros(num, len + holes + 1);  % ¼ÇÂ¼¾àÀë
-        pos = zeros(num, len + holes + 1);  % ¼ÇÂ¼Â·¾¶
+        dis = zeros(num, len + holes + 1);  % è®°å½•è·ç¦»
+        pos = zeros(num, len + holes + 1);  % è®°å½•è·¯å¾„
     else
-        dis = zeros(num, len + 1);  % ¼ÇÂ¼¾àÀë
-        pos = zeros(num, len + 1);  % ¼ÇÂ¼Â·¾¶
+        dis = zeros(num, len + 1);  % è®°å½•è·ç¦»
+        pos = zeros(num, len + 1);  % è®°å½•è·¯å¾„
     end
     
     dis(2: end, 1) = -Inf;
@@ -24,7 +24,7 @@ function decode_bit = soft_viterbi(bitProb, eff, tail, holegap)
     
     Status = [0, 0, 0; 0, 0, 1; 0, 1, 0; 0, 1, 1; ...
         1, 0, 0; 1, 0, 1; 1, 1, 0; 1, 1, 1];
-    trans = cell(num, 2);  % ×´Ì¬×ªÒÆµÄÊä³ö¾ØÕó
+    trans = cell(num, 2);  % çŠ¶æ€è½¬ç§»çš„è¾“å‡ºçŸ©é˜µ
     for i = 1: num
         s = Status(i, : )';
         for branch = 0: 1
@@ -34,7 +34,7 @@ function decode_bit = soft_viterbi(bitProb, eff, tail, holegap)
     end
     
     cnt = 0;
-    %% viterbiÒëÂë
+    %% viterbiè¯‘ç 
     for i = 1: length(pos) - 1
         if holegap > 2 && mod(i, holegap) == 2
             cnt = cnt + 1;
@@ -68,7 +68,7 @@ function decode_bit = soft_viterbi(bitProb, eff, tail, holegap)
         end
     end
     
-    %% »ØËÝÇó½â×îÓÅÂ·¾¶
+    %% å›žæº¯æ±‚è§£æœ€ä¼˜è·¯å¾„
     if (tail)
         posEnd = 1;
     else
