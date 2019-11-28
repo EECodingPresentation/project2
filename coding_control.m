@@ -33,6 +33,24 @@ if(idx>=1&&idx<=30)
     data=fscanf(fid,"%s");
     data=data-'0';
     sta=fclose(fid);
+
+elseif(idx >= 31 && idx <= 70)
+    %% 从DES_key\DES_Key.m文件中读取密钥
+    % 31~50为偶校验，51~70为奇校验
+    load('DES_key\DES_key.mat');
+    idx = idx - 30;
+    blocks = ceil(length(data1) / 64);
+    if blocks*64 > length(data1)
+        data1 = [data1, zeros(1, blocks*64 - length(data1))]';
+    else
+        data1 = data1';
+    end
+    data = zeros(blocks*64, 1, 'double');
+    for b = 1: blocks
+        index = (b-1)*64+1: b*64;
+        data(index) = DESEncode(data1(index), DES_key(: , idx));
+    end
+    data = data';
 end
 
 end
