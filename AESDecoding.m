@@ -12,7 +12,7 @@ AESpre;
 W=keyextend(k);
 %解密模块
 l=length(ctext0);
-N=floor(l/128);
+N=ceil(l/128);
 if N*128>l
     ctext0=[ctext0,zeros(1,N*128-l)];
 end
@@ -51,3 +51,29 @@ a(4,:)=bitxor(bitxor(AESlistmulti(input(1,:),11),AESlistmulti(input(2,:),13)),bi
 output=a;
 end
 
+function output = keyextend(k)
+%KEYEXTEND 此处显示有关此函数的摘要
+%   此处显示详细说明
+global s_box_i;
+%k=uint8(reshape((0:15),[4,4])');
+% k=["3C A1 0B 21 57 F0 19 16 90 2E 13 80 AC C1 07 BD"];
+% k=hex2dec(strsplit(k));
+% k=reshape(k,[4,4]);
+%Rcon = ["01000000","02000000","04000000","08000000","10000000","20000000","40000000","80000000","1b000000","36000000"];
+Rcon = ["01","02","04","08","10","20","40","80","1b","36"];
+Rcon = hex2dec(Rcon);
+W=zeros(4,44);
+W(:,1:4)=k;
+for i=5:44
+    if mod(i,4)~=1;
+        W(:,i)=bitxor(W(:,i-4),W(:,i-1));
+    else
+        T=W(:,i-1);
+        T=[T(2:4);T(1)];
+        T=s_box_i(T+1);
+        T(1)=bitxor(T(1),Rcon((i-1)/4));
+        W(:,i)=bitxor(W(:,i-4),T);
+    end
+end
+output=W;
+end
