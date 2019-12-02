@@ -86,19 +86,15 @@ for ifconv = [0, 1]
                         decode_bit=[decode_bit,zeros(1,3*(tail==1))];
 						Res = decode_bit(1:length([data1, zeros(1,3*(tail==1))])) ~= [data1, zeros(1,3*(tail==1))];
 						sum(abs(Res))
-                    else
-                        if codemode>0
-                            disp("正在解密!");
-                            decode_bit = decoding_control(hard_bitcode,codemode);%解密
-                            disp("解密完成!");
-                        else
-                            decode_bit=hard_bitcode;
-                        end
+					else
+						disp("正在解密!");
+						decode_bit = decoding_control(hard_bitcode,codemode);%解密
+						disp("解密完成!");
 						Res=decode_bit(1:length(data1))~=data1;
 						sum(abs(Res))
 					end
 					cnt = cnt + 1;
-					subplot(4, 5, cnt);
+					subplot(3, 5, cnt);
 					stem(Res,'MarkerSize',1);
 					title([num2str(bitmode),'bit/符号;卷积编码效率1/',...
 						num2str(eff)]) 
