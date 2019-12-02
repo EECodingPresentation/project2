@@ -5,7 +5,7 @@ clc;
 
 %% 参数设定
 ifconv=1;%是否进行卷积编码
-datalen=64*3;%随机生成01序列的长度
+datalen=128*3;%随机生成01序列的长度
 eff=3;%卷积编码效率，取值{2,3},2代表1/2编码，3代表1/3编码
 tail=1;%卷积编码发端是否收尾，取值{0,1}，0代表不收尾，1代表收尾
 bitmode=1;%电平映射模式，取值{1,2,3}，1代表1bit/符号，2代表2bit/符号，3代表3bit/符号
@@ -21,7 +21,8 @@ for ifconv = [0, 1]
 	for sigma = [0.2, 0.4]
 		figure('NumberTitle', 'off', 'Name', [strConv,';σ=',num2str(sigma)]);
 		cnt = 0;
-		for codemode = [31]
+		for codemode = [31, 71]
+        % for codemode = [31, 71]  % 目前无法适配RSA
 			for bitmode = [1, 2, 3]
 				for eff = [2, 3]
 					if bitmode == 2 && eff == 3

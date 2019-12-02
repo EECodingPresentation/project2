@@ -51,6 +51,11 @@ elseif(idx >= 31 && idx <= 70)
         data(index) = DESDecode(data1(index), DES_key(: , idx));
     end
     data = data';
+elseif(idx >=71 && idx <=100)
+   load('AES_key\AES_key.mat');
+   idx = idx-70;
+   key = AES_key(:,idx)';
+   data = AESDecoding(data1,key);
 end
 
 end

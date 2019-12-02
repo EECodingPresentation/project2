@@ -1,7 +1,8 @@
+%绘制Eb/n0和误码率关系特供版信道，多输出一个Eb/n0
 %信道模块，输入发送的角度phi_input(2bit/symbol）
 %输出接收的角度phi_output（-π到π)
-function output=channel2(phi_input,sigma)
-% close all;
+function [output,Eb_n0]=channel3(phi_input,sigma)
+close all;
     if exist("phi_input")~=1
         phi_input=2*pi*rand(1,4096)-pi; %输入样例
     end
@@ -51,6 +52,7 @@ function output=channel2(phi_input,sigma)
     %%
     n=normrnd(0,sigma,1,length(phi_trans));
     phi_trans_noisy=phi_trans+n;
+    Eb_n0=phi_trans*phi_trans.'/(n*n.')/4;
     %%
 %     figure;%绘制接收功率谱
 %   plot(phi_trans_noisy(1:200));
