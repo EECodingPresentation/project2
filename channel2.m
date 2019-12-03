@@ -1,7 +1,6 @@
 %信道模块，输入发送的角度phi_input(2bit/symbol）
 %输出接收的角度phi_output（-π到π)
 function output=channel2(phi_input,sigma)
-close all;
     if exist("phi_input")~=1
         phi_input=2*pi*rand(1,4096)-pi; %输入样例
     end

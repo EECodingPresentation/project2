@@ -48,6 +48,8 @@
 |soft_viterbi.m|通信系统|软判决译码|
 |sourcedata.m|通信系统|原文生成程序|
 
+### 开源网址:
+https://github.com/EECodingPresentation/project2
 
 ### 生成大质数
 > 文件夹:/prime  

@@ -24,7 +24,7 @@ for ifconv = [0, 1]
 		for codemode = [0,1, 31, 71]
         % for codemode = [31, 71]  % 目前无法适配RSA
 			for bitmode = [1, 2, 3]
-				for eff = [2, 3]
+				 eff = 2;
 					if bitmode == 2 && eff == 3
                         break;
                     end
@@ -98,11 +98,11 @@ for ifconv = [0, 1]
 						sum(abs(Res))
 					end
 					cnt = cnt + 1;
-					subplot(4, 5, cnt);
+					subplot(4, 3, cnt);
 					stem(Res,'MarkerSize',1);
 					title([num2str(bitmode),'bit/符号;卷积编码效率1/',...
 						num2str(eff)]) 
-				end
+				
 			end
 		end
 	end
