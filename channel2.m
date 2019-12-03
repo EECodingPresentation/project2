@@ -1,7 +1,7 @@
 %信道模块，输入发送的角度phi_input(2bit/symbol）
 %输出接收的角度phi_output（-π到π)
 function output=channel2(phi_input,sigma)
-% close all;
+close all;
     if exist("phi_input")~=1
         phi_input=2*pi*rand(1,4096)-pi; %输入样例
     end
@@ -17,16 +17,15 @@ function output=channel2(phi_input,sigma)
     ttrans=L/rs;%传输时间2.048s
     fs=rs*rate;%采样频率 20000Hz  
     w=rs*3/4;%带宽1500Hz
-    %wc=2;%载波角频率，这个取值问题待解决
     f0=1850;%(300+3400)/2
     phi_I=A*cos(phi_input);%I路cos
     phi_Q=A*sin(phi_input);%Q路sin
     phi_pulse_I=reshape([phi_I;zeros(rate-1,L)],1,L*rate);%插0中间生成冲击串
     phi_pulse_I_delay=[zeros(1,2*rate*delay),phi_pulse_I];
-    phi_pulse_I=[phi_pulse_I,zeros(1,2*rate*delay)];%补0使得和滤波器长度一致
+    phi_pulse_I=[phi_pulse_I,zeros(1,2*rate*delay)];%末尾补零
     phi_trans_I=filter(rcosfir(0.5,delay,rate,1/fs,'sqrt'),1,phi_pulse_I);%成型滤波
     phi_pulse_Q=reshape([phi_Q;zeros(rate-1,L)],1,L*rate);%生成冲击串
-    phi_pulse_Q=[phi_pulse_Q,zeros(1,2*rate*delay)];%补0延时的长度
+    phi_pulse_Q=[phi_pulse_Q,zeros(1,2*rate*delay)];%末尾补零
      t=1:length(phi_trans_I);
      t=t/fs;
     phi_trans_Q=filter(rcosfir(0.5,delay,rate,1/fs,'sqrt'),1,phi_pulse_Q);%成型滤波   
@@ -51,6 +50,7 @@ function output=channel2(phi_input,sigma)
     %%
     n=normrnd(0,sigma,1,length(phi_trans));
     phi_trans_noisy=phi_trans+n;
+    Eb_n0=phi_trans*phi_trans.'/(n*n.')/4;
     %%
 %     figure;%绘制接收功率谱
 %   plot(phi_trans_noisy(1:200));
