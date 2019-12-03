@@ -3,8 +3,10 @@
 类别包含:通信系统(不含加解密)、RSA、AES、DES
 |文件/文件夹|类别|作用|
 |--|--|--|
+|/AES_key|AES|AES30对密钥的存储，对应71-100|
+|/DES_key|DES|DES40对密钥的存储，对应31-69|
 |/prime|RSA|Java程序，生成100个长度为128bit的质数，保存在prime.txt中|
-|/RSA_key|RSA|RSA密钥30对，由main.m中选择第k对|
+|/RSA_key|RSA|RSA密钥30对，由main.m中选择第k对，对应1-30|
 |AESCoding.m|AES|AES加密|
 |AESDecoding.m|AES|AES解密|
 |AESlistmulti.m|AES|用查表法算扩域乘法|
@@ -12,6 +14,7 @@
 |bign.h|RSA|高精度模板|
 |calculateProbability.m|通信系统|为软判决计算概率|
 |channel2.m|通信系统|信道|
+|channel3.m|通信系统|绘图程序，绘制Eb/n0|
 |checkinp.m|通信系统|根号升余弦组件|
 |ciphertext.txt|RSA|密文文件，RSA_code.exe运行得到，作为RSA_decode.exe调用的输入|
 |coding_control.m|通信系统|选择第k对密钥对，对原文加密得到密文|
@@ -22,6 +25,8 @@
 |DESEncode.m|DES|DES加密|
 |DESKey.m|DES|DES生成密钥|
 |DESTest.m|DES|DES测试程序|
+|Eb_n0_pb.m|通信系统|绘制Eb/n0与误码率关系曲线|
+|error_map.m|通信系统|绘制误码图案|
 |hard_judge.m|通信系统|硬判决判决|
 |hard_viterbi.m|通信系统|硬判决译码|
 |main.m|通信系统|通信系统主程序，模拟整个通信系统，包含加解密、调制解调、电平映射、成型滤波、信道、判决、译码等|
